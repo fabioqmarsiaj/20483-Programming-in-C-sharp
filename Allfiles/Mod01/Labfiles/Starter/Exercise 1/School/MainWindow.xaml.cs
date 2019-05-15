@@ -60,7 +60,7 @@ namespace School
             // TODO: Exercise 1: Task 1a: If the user pressed Enter, edit the details for the currently selected student
             switch (e.Key)
             {
-                case Key.Enter: Student student = this.studentsList.SelectedItems as Student;
+                case Key.Enter: Student student = this.studentsList.SelectedItem as Student;
 
                     StudentForm sf = new StudentForm();
                     sf.Title = "Edit Student Details";
@@ -68,7 +68,14 @@ namespace School
                     sf.lastName.Text = student.LastName;
                     sf.dateOfBirth.Text = student.DateOfBirth.ToString("d");
 
-                    sf.ShowDialog();
+                    if (sf.ShowDialog().Value)
+                    {
+                        student.FirstName = sf.firstName.Text;
+                        student.LastName = sf.lastName.Text;
+                        student.DateOfBirth = DateTime.ParseExact(sf.dateOfBirth.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+
+                        saveChanges.IsEnabled = true;
+                    }
 
                   
                     break;
@@ -94,6 +101,11 @@ namespace School
         }
 
         #endregion
+
+        private void StudentsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     [ValueConversion(typeof(string), typeof(Decimal))]
