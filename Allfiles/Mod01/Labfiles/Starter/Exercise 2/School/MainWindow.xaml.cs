@@ -101,9 +101,11 @@ namespace School
                         newStudent.LastName = newSf.lastName.Text;
                         newStudent.DateOfBirth = DateTime.ParseExact(newSf.dateOfBirth.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
 
-                        // Assign the new student to the current teacher
-                        // Add the student to the list displayed on the form
+                        // Assign the new student to the current teacher                       
                         this.teacher.Students.Add(newStudent);
+
+                        // Add the student to the list displayed on the form
+                        this.studentsInfo.Add(newStudent);
 
                         // Enable saving (changes are not made permanent until they are written back to the database)
                         saveChanges.IsEnabled = true;
