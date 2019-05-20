@@ -53,9 +53,31 @@ namespace GradesPrototype.Views
         
         public void Refresh()
         {
-            // TODO: Exercise 3: Task 4a: Display the details for the current student (held in SessionContext.CurrentStudent) 
+            // Display the details for the current student (held in SessionContext.CurrentStudent) 
+            studentName.DataContext = SessionContext.CurrentStudent;
 
-            // TODO: Exercise 3: Task 4d: Create a list of the grades for the student and display this list on the page
+            if (SessionContext.UserRole == Role.Student)
+            {
+                btnBack.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                btnBack.Visibility = Visibility.Visible;
+            }
+
+            // Create a list of the grades for the student and display this list on the page
+
+            ArrayList grades = new ArrayList();
+
+            foreach (Grade grade in DataSource.Grades)
+            {
+                if (grade.StudentID == SessionContext.CurrentStudent.StudentID)
+                {
+                    grades.Add(grade);
+                }
+            }
+
+            studentGrades.ItemsSource = grades;
         }
     }
 }
